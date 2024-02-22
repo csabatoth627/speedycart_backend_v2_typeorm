@@ -15,4 +15,20 @@ const getUsers = async(request: Request, response: Response, next: NextFunction)
     }
 }
 
-export {getUsers}
+const createUser = async(request: Request, response: Response, next: NextFunction) => {
+    try {
+        const user = new User()
+        user.name = "test"
+        user.email = "tesssst@gmail.com"
+        user.password = "123"
+
+        await AppDataSource.manager.save(user)
+        response.json(user)
+        
+    } catch (error) {
+        response.status(500).json({ error: error.message });
+    } 
+    
+}
+
+export {getUsers, createUser}
