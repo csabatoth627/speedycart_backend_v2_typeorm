@@ -2,7 +2,7 @@ import * as express from "express";
 import * as dotenv from "dotenv";
 dotenv.config();
 import * as bodyParser from "body-parser";
-import { AppDataSource } from "./data-source";
+import { AppDataSource } from "./config/data-source";
 
 const port = process.env.PORT || 5000;
 
