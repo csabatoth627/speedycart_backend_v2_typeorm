@@ -1,4 +1,4 @@
-import { AppDataSource } from "../config/data-source";
+/* import { AppDataSource } from "../config/data-source";
 import { NextFunction, Request, Response } from "express";
 import { User } from "../entity/User";
 
@@ -48,3 +48,4 @@ export class UserController {
     return "user has been removed";
   }
 }
+ */
