@@ -6,6 +6,7 @@ import { User } from "../entity/User";
 import { Product } from "../entity/Product";
 import { Review } from "../entity/Review";
 import { Order } from "../entity/Order";
+import { ShippingAddress } from "../entity/ShippingAddress";
 
 const PORT = parseInt(process.env.DB_PORT);
 const USERNAME = process.env.DB_USERNAME;
@@ -21,7 +22,7 @@ export const AppDataSource = new DataSource({
   database: DATABASE,
   synchronize: true,
   logging: false,
-  entities: [User, Product, Review, Order],
+  entities: [User, Product, Review, Order, ShippingAddress],
   migrations: [],
   subscribers: [],
 });
