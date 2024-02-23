@@ -12,6 +12,8 @@
       "typescript": "4.5.2"
    },
    "dependencies": {
+      "@types/bcryptjs": "^2.4.6",
+      "bcryptjs": "^2.4.3",
       "body-parser": "^1.19.1",
       "express": "^4.17.2",
       "pg": "^8.4.0",
@@ -21,6 +23,8 @@
    "scripts": {
       "start": "ts-node src/server.ts",
       "server": "nodemon src/server.ts",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "typeorm": "typeorm-ts-node-commonjs",
+      "data:import": "ts-node src/seeder.ts",
+    "data:destroy": "ts-node src/seeder.ts -d"
    }
 }

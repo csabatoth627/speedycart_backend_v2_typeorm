@@ -4,18 +4,14 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinColumn,
-  OneToMany,
-  OneToOne,
+  
 } from "typeorm";
-import { Product } from "./Product";
-import { Review } from "./Review";
-import { Order } from "./Order";
+
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn("uuid")
-  _id: number;
+  _id: string;
 
   @Column({ nullable: false })
   name: string;
