@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinColumn,
+  OneToOne,
+} from "typeorm";
+import { Order } from "./Order";
 
 @Entity()
 export class ShippingAddress {
@@ -16,4 +23,8 @@ export class ShippingAddress {
 
   @Column({ nullable: false })
   country: string;
+
+  @OneToOne(() => Order)
+  @JoinColumn()
+  order: Order
 }
