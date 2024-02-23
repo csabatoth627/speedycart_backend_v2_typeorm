@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  JoinColumn,
+  OneToMany,
+  OneToOne,
 } from "typeorm";
 import { Product } from "./Product";
 import { Review } from "./Review";
@@ -36,17 +38,4 @@ export class User {
     onUpdate: "CURRENT_TIMESTAMP",
   })
   updatedAt: Date;
-
-  @OneToMany(() => Product, (product) => product.user)
-    products: Product[]
-
-  @OneToMany(() => Review, (review) => review.user)
-  reviews: Review[]
-
-  @OneToMany(() => Order, (order) => order.user)
-  orders: Order[]
-
-
-
-
 }

@@ -3,9 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  JoinColumn,
   UpdateDateColumn,
-  ManyToOne,
-  OneToMany
+  OneToOne,
+  OneToMany,
 } from "typeorm";
 import { User } from "./User";
 import { Review } from "./Review";
@@ -55,9 +56,10 @@ export class Product {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.products)
+  @OneToOne(() => User)
+  @JoinColumn()
   user: User;
 
   @OneToMany(() => Review, (review) => review.product)
-    reviews: Review[]
+  reviews: Review[];
 }

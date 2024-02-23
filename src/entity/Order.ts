@@ -3,9 +3,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  JoinColumn,
+  OneToOne,
   UpdateDateColumn,
-  ManyToOne,
-  OneToMany,
 } from "typeorm";
 import { User } from "./User";
 
@@ -14,7 +14,7 @@ export class Order {
   @PrimaryGeneratedColumn("uuid")
   _id: number;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   paymentMethod: string;
 
   @Column({
@@ -63,9 +63,8 @@ export class Order {
   isDelivered: boolean;
 
   @Column()
-  deliveredAt: Date
+  deliveredAt: Date;
 
-  
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;
 
@@ -76,6 +75,7 @@ export class Order {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.orders)
-  user: User
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User;
 }
