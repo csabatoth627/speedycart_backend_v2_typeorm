@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany
 } from "typeorm";
+import { Product } from "./Product";
 
 @Entity()
 export class User {
@@ -32,4 +34,8 @@ export class User {
     onUpdate: "CURRENT_TIMESTAMP",
   })
   updated_at: Date;
+
+  @OneToMany(() => Product, (product) => product.user)
+    photos: Product[]
+
 }
