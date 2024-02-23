@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import { User } from "../entity/User";
 import { Product } from "../entity/Product";
+import { Review } from "../entity/Review";
 
 const PORT = parseInt(process.env.DB_PORT);
 const USERNAME = process.env.DB_USERNAME;
@@ -19,7 +20,7 @@ export const AppDataSource = new DataSource({
   database: DATABASE,
   synchronize: true,
   logging: false,
-  entities: [User, Product],
+  entities: [User, Product, Review],
   migrations: [],
   subscribers: [],
 });

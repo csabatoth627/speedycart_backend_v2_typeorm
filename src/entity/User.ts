@@ -36,6 +36,6 @@ export class User {
   updated_at: Date;
 
   @OneToMany(() => Product, (product) => product.user)
-    photos: Product[]
+    product: Product[]
 
 }

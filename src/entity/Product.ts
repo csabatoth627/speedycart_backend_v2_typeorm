@@ -4,9 +4,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne
+  ManyToOne,
+  OneToMany
 } from "typeorm";
 import { User } from "./User";
+import { Review } from "./Review";
 
 @Entity()
 export class Product {
@@ -53,6 +55,9 @@ export class Product {
   })
   updated_at: Date;
 
-  @ManyToOne(() => User, (user) => user.photos)
-  user: User
+  @ManyToOne(() => User, (user) => user.product)
+  user: User;
+
+  @OneToMany(() => Review, (review) => review.product)
+    reviews: Review[]
 }
