@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   JoinColumn,
   OneToOne,
+  OneToMany,
   UpdateDateColumn,
 } from "typeorm";
 import { User } from "./User";
+import { OrderItem } from "./OrderItems";
 
 @Entity()
 export class Order {
@@ -78,4 +80,7 @@ export class Order {
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
+
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
+  orderItems: OrderItem[];
 }
