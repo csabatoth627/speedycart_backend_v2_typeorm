@@ -7,6 +7,7 @@ import {
   ManyToOne,
   OneToMany,
 } from "typeorm";
+import { User } from "./User";
 
 @Entity()
 export class Order {
@@ -74,4 +75,7 @@ export class Order {
     onUpdate: "CURRENT_TIMESTAMP",
   })
   updated_at: Date;
+
+  @ManyToOne(() => User, (user) => user.orders)
+  user: User
 }

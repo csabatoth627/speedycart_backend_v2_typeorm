@@ -25,14 +25,14 @@ export class Review {
     comment: string;
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-    created_at: Date;
+    createdAt: Date;
   
     @UpdateDateColumn({
       type: "timestamp",
       default: () => "CURRENT_TIMESTAMP",
       onUpdate: "CURRENT_TIMESTAMP",
     })
-    updated_at: Date;
+    updatedAt: Date;
 
     @ManyToOne(() => Product, (product) => product.reviews)
     product: Product

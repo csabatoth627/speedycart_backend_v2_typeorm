@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Product } from "./Product";
 import { Review } from "./Review";
+import { Order } from "./Order";
 
 @Entity()
 export class User {
@@ -27,20 +28,25 @@ export class User {
   isAdmin: boolean;
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP",
     onUpdate: "CURRENT_TIMESTAMP",
   })
-  updated_at: Date;
+  updatedAt: Date;
 
   @OneToMany(() => Product, (product) => product.user)
     products: Product[]
 
   @OneToMany(() => Review, (review) => review.user)
   reviews: Review[]
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[]
+
+
 
 
 }
