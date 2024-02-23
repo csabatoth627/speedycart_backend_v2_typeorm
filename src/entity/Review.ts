@@ -5,29 +5,25 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
-  OneToMany,
   OneToOne,
+  ManyToOne,
 } from "typeorm";
 import { Product } from "./Product";
-import { Review } from "./Review";
-import { Order } from "./Order";
+import { User } from "./User";
 
 @Entity()
-export class User {
+export class Review {
   @PrimaryGeneratedColumn("uuid")
   _id: number;
 
   @Column({ nullable: false })
   name: string;
 
-  @Column({ unique: true, nullable: false })
-  email: string;
+  @Column({ nullable: false })
+  rating: number;
 
   @Column({ nullable: false })
-  password: string;
-
-  @Column({ default: false, nullable: false })
-  isAdmin: boolean;
+  comment: string;
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;
@@ -38,4 +34,11 @@ export class User {
     onUpdate: "CURRENT_TIMESTAMP",
   })
   updatedAt: Date;
+
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User;
+
+  @ManyToOne(() => Product, (product) => product.reviews)
+  product: Product;
 }
