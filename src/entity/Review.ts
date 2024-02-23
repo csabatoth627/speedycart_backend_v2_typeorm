@@ -7,6 +7,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import { Product } from "./Product";
+import { User } from "./User";
 
 @Entity()
 export class Review {
@@ -35,4 +36,7 @@ export class Review {
 
     @ManyToOne(() => Product, (product) => product.reviews)
     product: Product
+
+    @ManyToOne(() => User, (user) => user.reviews)
+    user: User
 }

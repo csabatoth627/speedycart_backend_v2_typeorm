@@ -7,6 +7,7 @@ import {
   OneToMany
 } from "typeorm";
 import { Product } from "./Product";
+import { Review } from "./Review";
 
 @Entity()
 export class User {
@@ -36,6 +37,10 @@ export class User {
   updated_at: Date;
 
   @OneToMany(() => Product, (product) => product.user)
-    product: Product[]
+    products: Product[]
+
+  @OneToMany(() => Review, (review) => review.user)
+  reviews: Review[]
+
 
 }

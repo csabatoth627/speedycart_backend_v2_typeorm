@@ -55,7 +55,7 @@ export class Product {
   })
   updated_at: Date;
 
-  @ManyToOne(() => User, (user) => user.product)
+  @ManyToOne(() => User, (user) => user.products)
   user: User;
 
   @OneToMany(() => Review, (review) => review.product)
