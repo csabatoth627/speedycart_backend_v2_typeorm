@@ -67,14 +67,14 @@ export class Order {
 
   
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP",
     onUpdate: "CURRENT_TIMESTAMP",
   })
-  updated_at: Date;
+  updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.orders)
   user: User
