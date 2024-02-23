@@ -2,7 +2,6 @@ import * as express from "express";
 import * as dotenv from "dotenv";
 dotenv.config();
 import * as bodyParser from "body-parser";
-import { AppDataSource } from "./config/data-source";
 import { userRoutes } from "./routes/userRoutes";
 import connectDb from "./config/db";
 

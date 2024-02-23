@@ -23,6 +23,8 @@
    "scripts": {
       "start": "ts-node src/server.ts",
       "server": "nodemon src/server.ts",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "typeorm": "typeorm-ts-node-commonjs",
+      "data:import": "ts-node src/seeder.ts",
+    "data:destroy": "ts-node src/seeder.ts -d"
    }
 }

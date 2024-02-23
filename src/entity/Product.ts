@@ -14,9 +14,9 @@ import { Review } from "./Review";
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn("uuid")
-  _id: number;
+  _id: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: false })
   name: string;
 
   @Column({ nullable: false })
@@ -56,7 +56,10 @@ export class Product {
   })
   updatedAt: Date;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, {
+    onDelete: "CASCADE",
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn()
   user: User;
 

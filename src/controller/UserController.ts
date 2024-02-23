@@ -1,14 +1,18 @@
 import { AppDataSource } from "../config/data-source";
 import { NextFunction, Request, Response } from "express";
 import { User } from "../entity/User";
-
-const userRepository = AppDataSource.getRepository(User)
+import { Product } from "../entity/Product";
+const userRepository = AppDataSource.getRepository(Product)
 
 
 
 const getUsers = async(request: Request, response: Response, next: NextFunction) => {
     try {
-        const users = await userRepository.find();
+        const users = await userRepository.find({
+            relations: {
+                user: true,
+            },
+        });
         response.json(users);
     } catch (error) {
         response.status(500).json({ error: error.message });
@@ -31,4 +35,14 @@ const createUser = async(request: Request, response: Response, next: NextFunctio
     
 }
 
-export {getUsers, createUser}
+const deleteUser = async(request: Request, response: Response, next: NextFunction) => {
+    try { userRepository.delete({})
+        response.status(200).json({message:"ddddddd"})
+        
+    } catch (error) {
+        response.status(500).json({ error: error.message });
+    } 
+    
+}
+
+export {getUsers, createUser, deleteUser}
