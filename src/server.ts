@@ -5,8 +5,6 @@ import * as bodyParser from "body-parser";
 import { userRoutes } from "./routes/userRoutes";
 import connectDb from "./config/db";
 
-connectDb();
-
 const port = process.env.PORT || 5000;
 
 const app = express();
@@ -18,6 +16,15 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRoutes);
 
-app.listen(port);
+const startServer = async () => {
+  try {
+    await connectDb();
+    app.listen(port, () => {
+      console.log(`Express server has started on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Unable to connect to database:", error.message);
+  }
+};
 
-console.log(`Express server has started on port ${port}`);
+startServer();
