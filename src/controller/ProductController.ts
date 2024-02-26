@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
-import {
-  getAllProducts,
-  findProductById,
-  saveSampleProduct,
-} from "../repository/productRepository";
+import { getAllProducts,findProductById, saveSampleProduct } from "../repository/ProductRepository";
 
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
   const products = await getAllProducts();
