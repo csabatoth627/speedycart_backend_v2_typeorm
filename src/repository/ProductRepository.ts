@@ -20,7 +20,7 @@ const findProductById = async (id: string): Promise<Product | undefined> => {
   });
 };
 
-const saveSampleProduct = async (userId: string) => {
+const saveSampleProduct = async (userId: string): Promise<Product> => {
   const user: User = await userRepository.findOne({
     where: {
       _id: userId,
@@ -41,4 +41,4 @@ const saveSampleProduct = async (userId: string) => {
   return await productRepository.save(product)
 };
 
-export { getAllProducts, findProductById };
+export { getAllProducts, findProductById, saveSampleProduct };

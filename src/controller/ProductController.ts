@@ -3,6 +3,7 @@ import asyncHandler from "../middleware/asyncHandler";
 import {
   getAllProducts,
   findProductById,
+  saveSampleProduct,
 } from "../repository/productRepository";
 
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
@@ -20,4 +21,9 @@ const getProductById = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-export { getProducts, getProductById };
+const createProduct = asyncHandler(async (req: Request, res: Response) => {
+  const createdProduct = await saveSampleProduct(req.user.id);
+  res.status(201).json(createProduct);
+});
+
+export { getProducts, getProductById, createProduct };
