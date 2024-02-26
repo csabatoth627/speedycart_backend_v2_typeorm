@@ -28,6 +28,15 @@ export class Product {
   @Column({ nullable: false })
   category: string;
 
+  @Column({
+    type: "decimal",
+    precision: 5,
+    scale: 2,
+    nullable: false,
+    default: 0,
+  })
+  rating: number;
+
   @Column({ nullable: false })
   description: string;
 
