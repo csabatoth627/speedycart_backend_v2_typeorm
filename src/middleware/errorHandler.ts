@@ -10,7 +10,8 @@ const errorHandler = (err: Error, req: Request, res: Response, next: NextFunctio
   let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   let message = err.message;
 
-  if(err.name === "CastError" && (err as any).kind === "ObjectId") {
+
+  if(err.name === "QueryFailedError" ) {
     message = "Resource not found";
     statusCode = 404;
   }
