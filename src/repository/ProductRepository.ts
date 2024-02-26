@@ -8,12 +8,12 @@ const userRepository: Repository<User> = AppDataSource.getRepository(User);
 const productRepository: Repository<Product> =
   AppDataSource.getRepository(Product);
 
-const getAllProducts = async (): Promise<Product[]> => {
-  return await productRepository.find();
+const getAllProducts =  (): Promise<Product[]> => {
+  return  productRepository.find();
 };
 
-const findProductById = async (id: string): Promise<Product | undefined> => {
-  return await productRepository.findOne({
+const findProductById =  (id: string): Promise<Product | undefined> => {
+  return  productRepository.findOne({
     where: {
       _id: id,
     },
@@ -38,7 +38,7 @@ const saveSampleProduct = async (userId: string): Promise<Product> => {
   product.numReviews = 0,
   product.description = 'Sample description'
 
-  return await productRepository.save(product)
+  return  productRepository.save(product)
 };
 
 export { getAllProducts, findProductById, saveSampleProduct };

@@ -18,8 +18,8 @@ const getProductById = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const createProduct = asyncHandler(async (req: Request, res: Response) => {
-  const createdProduct = await saveSampleProduct(req.user.id);
-  res.status(201).json(createProduct);
+  const product = await saveSampleProduct(req.user.id);
+  res.status(201).json(product);
 });
 
 export { getProducts, getProductById, createProduct };
