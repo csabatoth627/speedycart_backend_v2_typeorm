@@ -10,7 +10,9 @@ import connectDb from "./config/db";
 const port = process.env.PORT || 5000;
 
 const app = express();
-app.use(bodyParser.json());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("API is running....");

@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
 
 const authUser = asyncHandler(async (req: Request, res: Response) => {
+    console.log(req.body);
+    
   res.send("auth user");
 });
 
