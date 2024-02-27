@@ -6,6 +6,8 @@ import {
   UpdateDateColumn,
   
 } from "typeorm";
+import * as bcrypt from 'bcryptjs';
+
 
 
 @Entity()
@@ -34,4 +36,8 @@ export class User {
     onUpdate: "CURRENT_TIMESTAMP",
   })
   updatedAt: Date;
+
+  async comparePassword(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password);
+  }
 }
