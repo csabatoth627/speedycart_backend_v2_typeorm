@@ -2,7 +2,6 @@ import * as express from "express";
 import * as dotenv from "dotenv";
 dotenv.config();
 import * as bodyParser from "body-parser";
-import { userRoutes } from "./routes/userRoutes";
 import { productRoutes } from "./routes/productRoutes";
 import { notFound, errorHandler } from "./middleware/errorHandler";
 import connectDb from "./config/db";
@@ -17,7 +16,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products", productRoutes);
-app.use("/api/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
