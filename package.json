@@ -13,6 +13,7 @@
    },
    "dependencies": {
       "@types/bcryptjs": "^2.4.6",
+      "@types/jsonwebtoken": "^9.0.6",
       "bcryptjs": "^2.4.3",
       "body-parser": "^1.19.1",
       "express": "^4.17.2",
@@ -25,6 +26,6 @@
       "server": "nodemon src/server.ts",
       "typeorm": "typeorm-ts-node-commonjs",
       "data:import": "ts-node src/seeder.ts",
-    "data:destroy": "ts-node src/seeder.ts -d"
+      "data:destroy": "ts-node src/seeder.ts -d"
    }
 }
