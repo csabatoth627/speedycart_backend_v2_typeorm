@@ -12,4 +12,13 @@ const findUserByEmail = (userEmail: string): Promise<User | undefined> => {
   });
 };
 
-export { findUserByEmail };
+const findUserWithoutPassword = (id: string): Promise<User | undefined> => {
+  return userRepository.findOne({
+    where: {
+      _id: id,
+    },
+    select: ["_id", "name", "email", "isAdmin", "createdAt", "updatedAt"],
+  });
+};
+
+export { findUserByEmail, findUserWithoutPassword };
