@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
-import {  findUserByEmail } from "../repository/userRepository";
+import { findUserByEmail } from "../repository/userRepository";
 
 const authUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   const user = await findUserByEmail(email);
 
-  if (user) {
+  if (user &&  await user.comparePassword(password)) {
     res.json({
       _id: user._id,
       name: user.name,
