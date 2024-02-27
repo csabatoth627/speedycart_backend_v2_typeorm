@@ -4,11 +4,8 @@ import { User } from "../entity/User";
 
 const userRepository: Repository<User> = AppDataSource.getRepository(User);
 
-const authenticate = async (
-  userEmail: string,
-  userPassword: string
-): Promise<User> => {
-  const user: User = await userRepository.findOne({
+const findUserByEmail = (userEmail: string): Promise<User | undefined> => {
+  return userRepository.findOne({
     select: {
       _id: true,
       name: true,
@@ -19,9 +16,6 @@ const authenticate = async (
       email: userEmail,
     },
   });
-
-  return user;
 };
 
-
-export {authenticate}
+export { findUserByEmail };

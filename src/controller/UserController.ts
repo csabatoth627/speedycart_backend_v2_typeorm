@@ -1,10 +1,23 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
+import {  findUserByEmail } from "../repository/userRepository";
 
 const authUser = asyncHandler(async (req: Request, res: Response) => {
-    console.log(req.body);
-    
-  res.send("auth user");
+  const { email, password } = req.body;
+
+  const user = await findUserByEmail(email);
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email or password");
+  }
 });
 
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
