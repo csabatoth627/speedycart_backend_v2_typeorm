@@ -21,4 +21,16 @@ const findUserWithoutPassword = (id: string): Promise<User | undefined> => {
   });
 };
 
-export { findUserByEmail, findUserWithoutPassword };
+const createNewUser = (
+  email: string,
+  name: string,
+  password: string
+): Promise<User | undefined> => {
+  const user: User = new User();
+  user.email = email;
+  user.name = name;
+  user.password = password;
+  return userRepository.save(user);
+};
+
+export { findUserByEmail, findUserWithoutPassword, createNewUser };

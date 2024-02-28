@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
-import { findUserByEmail } from "../repository/userRepository";
+import { findUserByEmail, createNewUser } from "../repository/userRepository";
 import { generateToken } from "../utils/generateToken";
+import { User } from "../entity/User";
 
 const authUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  const user = await findUserByEmail(email);
-    generateToken(res, user._id)
+  const user: User = await findUserByEmail(email);
+  generateToken(res, user._id);
   if (user && (await user.comparePassword(password))) {
     res.json({
       _id: user._id,
@@ -22,16 +23,39 @@ const authUser = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
-  res.send("registerUser");
+  const { email, name, password } = req.body;
+
+  const userExist: User = await findUserByEmail(email);
+
+  if (userExist) {
+    res.status(400);
+    throw new Error("User already exist");
+  }
+
+  const user: User = await createNewUser(email, name, password);
+  generateToken(res, user._id);
+
+  if (user) {
+    res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+    });
+
+} else {
+    res.status(400)
+    throw new Error("Invalid user data")
+}
 });
 
 const logoutUser = asyncHandler(async (req: Request, res: Response) => {
-  res.cookie('jwt', '', {
-    httpOnly:true,
-    expires: new Date(0)
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
   });
 
-  res.status(200).json({message: 'Logged out successfully'})
+  res.status(200).json({ message: "Logged out successfully" });
 });
 
 const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
