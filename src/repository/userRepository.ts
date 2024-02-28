@@ -71,6 +71,10 @@ const saveUserProfile = async (
   }
 };
 
+const deleteUserProfile = (user: User): Promise<User> => {
+  return userRepository.remove(user)
+
+};
 export {
   findUserByEmail,
   findUserWithoutPassword,
@@ -78,4 +82,5 @@ export {
   getAllUser,
   findUserById,
   saveUserProfile,
+  deleteUserProfile,
 };

@@ -6,6 +6,7 @@ import {
   getAllUser,
   findUserById,
   saveUserProfile,
+  deleteUserProfile,
 } from "../repository/userRepository";
 import { generateToken } from "../utils/generateToken";
 import { User } from "../entity/User";
@@ -106,8 +107,21 @@ const getUsers = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(users);
 });
 
-const deleteUser = asyncHandler(async (req: Request, res: Response) => {
-  res.send("deleteUser");
+const deleteUser = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const user: User = await findUserById(req.params.id);
+  if (user) {
+    if (user.isAdmin) {
+      res.status(400);
+      throw new Error("Cannot delete admin user");
+    }
+    const deletedUser = await deleteUserProfile(user);
+    res
+      .status(200)
+      .json({ message: `${deletedUser.name} deleted successfully` });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 const getUserByID = asyncHandler(async (req: Request, res: Response) => {
   res.send("getUserByID");
