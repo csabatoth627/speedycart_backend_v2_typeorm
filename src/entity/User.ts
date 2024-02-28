@@ -4,11 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  
+  BeforeInsert,
+  BeforeUpdate,
 } from "typeorm";
-import * as bcrypt from 'bcryptjs';
-
-
+import * as bcrypt from "bcryptjs";
 
 @Entity()
 export class User {
@@ -37,7 +36,14 @@ export class User {
   })
   updatedAt: Date;
 
-  
+  @BeforeInsert()
+  @BeforeUpdate()
+ private async hashPassword() {
+    if (this.password) {
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+    }
+  }
 
   async comparePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password);

@@ -37,16 +37,15 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 
   if (user) {
     res.status(200).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
     });
-
-} else {
-    res.status(400)
-    throw new Error("Invalid user data")
-}
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
 });
 
 const logoutUser = asyncHandler(async (req: Request, res: Response) => {
