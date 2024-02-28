@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
-import { findUserByEmail, createNewUser } from "../repository/userRepository";
+import { findUserByEmail, createNewUser,getAllUser } from "../repository/userRepository";
 import { generateToken } from "../utils/generateToken";
 import { User } from "../entity/User";
 
@@ -66,7 +66,8 @@ const updateUserProfile = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const getUsers = asyncHandler(async (req: Request, res: Response) => {
-  res.send("getUsers");
+  const users: User[] = await getAllUser()
+  res.status(200).json(users)
 });
 
 const deleteUser = asyncHandler(async (req: Request, res: Response) => {

@@ -33,4 +33,10 @@ const createNewUser = (
   return userRepository.save(user);
 };
 
-export { findUserByEmail, findUserWithoutPassword, createNewUser };
+const getAllUser = (): Promise<User[]> => {
+  return userRepository.find({
+    select: ["_id", "name", "email", "isAdmin", "createdAt", "updatedAt"],
+  });
+};
+
+export { findUserByEmail, findUserWithoutPassword, createNewUser, getAllUser };
