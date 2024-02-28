@@ -1,25 +1,23 @@
-import { Request , Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import asyncHandler from "./asyncHandler";
 import { findUserWithoutPassword } from "../repository/userRepository";
 import { User } from "../entity/User";
 const jwt = require("jsonwebtoken");
+import { CustomRequest } from "../interfaces/CustomRequest";
 
-interface CustomRequest extends Request {
-  user?: User
-}
+
 
 const protect = asyncHandler(
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     let token;
 
     token = req.cookies.jwt;
-
     if (token) {
       try {
         const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
-        
+
         const user: User = await findUserWithoutPassword(decoded.userId);
-        req.user = user ;
+        req.user = user;
         next();
       } catch (error) {
         res.status(401);

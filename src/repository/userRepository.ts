@@ -39,4 +39,18 @@ const getAllUser = (): Promise<User[]> => {
   });
 };
 
-export { findUserByEmail, findUserWithoutPassword, createNewUser, getAllUser };
+const findUserById = (id: string): Promise<User | undefined> => {
+  return userRepository.findOne({
+    where: {
+      _id: id,
+    },
+  });
+};
+
+export {
+  findUserByEmail,
+  findUserWithoutPassword,
+  createNewUser,
+  getAllUser,
+  findUserById,
+};

@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
-import { findUserByEmail, createNewUser,getAllUser } from "../repository/userRepository";
+import { findUserByEmail, createNewUser,getAllUser,findUserById } from "../repository/userRepository";
 import { generateToken } from "../utils/generateToken";
 import { User } from "../entity/User";
+import { CustomRequest } from "../interfaces/CustomRequest";
 
 const authUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -57,9 +58,21 @@ const logoutUser = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
-  res.send("getUserProfile");
-});
+const getUserProfile = asyncHandler(async (req: CustomRequest, res: Response) => {
+  
+  const user = await findUserById(req.user._id);
+
+  if (user) {
+      res.status(200).json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+      });
+  } else {
+      res.status(404)
+      throw new Error('User not found')
+  }});
 
 const updateUserProfile = asyncHandler(async (req: Request, res: Response) => {
   res.send("updateUserProfile");
