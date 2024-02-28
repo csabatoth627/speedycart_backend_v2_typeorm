@@ -1,9 +1,16 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
-import { findUserByEmail, createNewUser,getAllUser,findUserById } from "../repository/userRepository";
+import {
+  findUserByEmail,
+  createNewUser,
+  getAllUser,
+  findUserById,
+  saveUserProfile,
+} from "../repository/userRepository";
 import { generateToken } from "../utils/generateToken";
 import { User } from "../entity/User";
 import { CustomRequest } from "../interfaces/CustomRequest";
+import { log } from "console";
 
 const authUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -58,29 +65,45 @@ const logoutUser = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-const getUserProfile = asyncHandler(async (req: CustomRequest, res: Response) => {
-  
-  const user = await findUserById(req.user._id);
+const getUserProfile = asyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    const user = await findUserById(req.user._id);
 
-  if (user) {
+    if (user) {
       res.status(200).json({
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          isAdmin: user.isAdmin,
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
       });
-  } else {
-      res.status(404)
-      throw new Error('User not found')
-  }});
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  }
+);
 
-const updateUserProfile = asyncHandler(async (req: Request, res: Response) => {
-  res.send("updateUserProfile");
-});
+const updateUserProfile = asyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    const updatedUser: User = await saveUserProfile(req);
+
+    if (updatedUser) {
+      res.status(200).json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+      });
+    } else {
+      res.status(404);
+      throw new Error("User not Found");
+    }
+  }
+);
 
 const getUsers = asyncHandler(async (req: Request, res: Response) => {
-  const users: User[] = await getAllUser()
-  res.status(200).json(users)
+  const users: User[] = await getAllUser();
+  res.status(200).json(users);
 });
 
 const deleteUser = asyncHandler(async (req: Request, res: Response) => {

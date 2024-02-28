@@ -1,6 +1,7 @@
 import { AppDataSource } from "../config/data-source";
 import { Repository } from "typeorm";
 import { User } from "../entity/User";
+import { CustomRequest } from "../interfaces/CustomRequest";
 
 const userRepository: Repository<User> = AppDataSource.getRepository(User);
 
@@ -47,10 +48,34 @@ const findUserById = (id: string): Promise<User | undefined> => {
   });
 };
 
+const saveUserProfile = async (
+  req: CustomRequest
+): Promise<User | undefined> => {
+  let user: User = await userRepository.findOne({
+    where: {
+      _id: req.user._id,
+    },
+  });
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+
+    if (req.body.password) {
+      const newPassword = req.body.password;
+      user.password = newPassword;
+    }
+
+    user = await userRepository.save(user);
+    return user;
+  }
+};
+
 export {
   findUserByEmail,
   findUserWithoutPassword,
   createNewUser,
   getAllUser,
   findUserById,
+  saveUserProfile,
 };
