@@ -1,14 +1,15 @@
-import { Request as ExpressRequest, Response, NextFunction } from "express";
+import { Request , Response, NextFunction } from "express";
 import asyncHandler from "./asyncHandler";
 import { findUserWithoutPassword } from "../repository/userRepository";
+import { User } from "../entity/User";
 const jwt = require("jsonwebtoken");
 
-interface MyRequest extends ExpressRequest {
-  user?: any;
+interface CustomRequest extends Request {
+  user?: User
 }
 
 const protect = asyncHandler(
-  async (req: MyRequest, res: Response, next: NextFunction) => {
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
     let token;
 
     token = req.cookies.jwt;
@@ -17,9 +18,8 @@ const protect = asyncHandler(
       try {
         const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
         
-        const user = await findUserWithoutPassword(decoded.userId);
-
-        req.user = user;
+        const user: User = await findUserWithoutPassword(decoded.userId);
+        req.user = user ;
         next();
       } catch (error) {
         res.status(401);
@@ -32,7 +32,7 @@ const protect = asyncHandler(
   }
 );
 
-const admin = (req: MyRequest, res: Response, next: NextFunction) => {
+const admin = (req: CustomRequest, res: Response, next: NextFunction) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {

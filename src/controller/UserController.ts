@@ -26,7 +26,12 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const logoutUser = asyncHandler(async (req: Request, res: Response) => {
-  res.send("logoutUser");
+  res.cookie('jwt', '', {
+    httpOnly:true,
+    expires: new Date(0)
+  });
+
+  res.status(200).json({message: 'Logged out successfully'})
 });
 
 const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
