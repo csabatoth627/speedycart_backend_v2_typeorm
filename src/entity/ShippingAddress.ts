@@ -24,7 +24,7 @@ export class ShippingAddress {
   @Column({ nullable: false })
   country: string;
 
-  @OneToOne(() => Order)
+  @OneToOne(() => Order, {onDelete: "CASCADE"})
   @JoinColumn()
   order: Order
 }

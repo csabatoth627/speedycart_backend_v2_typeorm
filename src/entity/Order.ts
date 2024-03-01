@@ -77,7 +77,9 @@ export class Order {
   })
   updatedAt: Date;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn()
   user: User;
 

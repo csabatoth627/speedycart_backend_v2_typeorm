@@ -24,7 +24,7 @@ export class PaymentResult {
   @Column()
   email_address: string;
 
-  @OneToOne(() => Order)
+  @OneToOne(() => Order, {onDelete: "CASCADE"})
   @JoinColumn()
   order: Order
 }
