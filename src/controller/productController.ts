@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
 import { getAllProducts,findProductById, saveSampleProduct } from "../repository/productRepository";
 
+interface MyRequest extends Request {
+  user?: any; 
+}
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
   const products = await getAllProducts();
   res.json(products);
@@ -17,7 +20,7 @@ const getProductById = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-const createProduct = asyncHandler(async (req: Request, res: Response) => {
+const createProduct = asyncHandler(async (req: MyRequest, res: Response) => {
   const product = await saveSampleProduct(req.user.id);
   res.status(201).json(product);
 });
