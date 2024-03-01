@@ -8,6 +8,7 @@ import {
   saveUserProfile,
   deleteUserProfile,
   findUserWithoutPassword,
+  saveUser,
 } from "../repository/userRepository";
 import { generateToken } from "../utils/generateToken";
 import { User } from "../entity/User";
@@ -133,8 +134,20 @@ const getUserByID = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-const updateUser = asyncHandler(async (req: Request, res: Response) => {
-  res.send("updateUser");
+const updateUser = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const updatedUser = await saveUser(req);
+  if (updatedUser) {
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  
 });
 
 export {

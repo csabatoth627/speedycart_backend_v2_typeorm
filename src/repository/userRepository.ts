@@ -78,7 +78,7 @@ const deleteUserProfile = (user: User): Promise<User> => {
 const saveUser = async (req: CustomRequest): Promise<User | undefined> => {
   let user: User = await userRepository.findOne({
     where: {
-      _id: req.user._id,
+      _id: req.params.id,
     },
   });
   if (user) {
