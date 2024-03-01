@@ -7,11 +7,11 @@ import {
   findUserById,
   saveUserProfile,
   deleteUserProfile,
+  findUserWithoutPassword,
 } from "../repository/userRepository";
 import { generateToken } from "../utils/generateToken";
 import { User } from "../entity/User";
 import { CustomRequest } from "../interfaces/CustomRequest";
-import { log } from "console";
 
 const authUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -124,7 +124,13 @@ const deleteUser = asyncHandler(async (req: CustomRequest, res: Response) => {
   }
 });
 const getUserByID = asyncHandler(async (req: Request, res: Response) => {
-  res.send("getUserByID");
+  const user = await findUserWithoutPassword(req.params.id);
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 const updateUser = asyncHandler(async (req: Request, res: Response) => {
