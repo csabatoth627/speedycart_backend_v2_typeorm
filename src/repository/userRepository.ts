@@ -72,8 +72,25 @@ const saveUserProfile = async (
 };
 
 const deleteUserProfile = (user: User): Promise<User> => {
-  return userRepository.remove(user)
+  return userRepository.remove(user);
+};
 
+const saveUser = async (req: CustomRequest): Promise<User | undefined> => {
+  let user: User = await userRepository.findOne({
+    where: {
+      _id: req.user._id,
+    },
+  });
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = Boolean(req.body.isAdmin);
+
+    user = await userRepository.save(user);
+
+    return user;
+  }
+  return null;
 };
 export {
   findUserByEmail,
@@ -83,4 +100,5 @@ export {
   findUserById,
   saveUserProfile,
   deleteUserProfile,
+  saveUser
 };
