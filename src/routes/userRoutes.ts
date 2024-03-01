@@ -10,7 +10,7 @@ import {
   deleteUser,
   getUserByID,
   updateUser,
-} from "../controller/userController";
+} from "../controller/userController"
 import { protect, admin } from "../middleware/authMiddleware";
 
 router.route("/").get(protect, admin, getUsers).post(registerUser);
